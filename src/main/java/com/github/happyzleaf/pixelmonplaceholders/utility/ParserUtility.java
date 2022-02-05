@@ -141,7 +141,19 @@ public class ParserUtility {
 					int index = value1.equals("1") ? 0 : value1.equals("2") ? 1 : value1.equalsIgnoreCase("h") ? 2 : -1;
 					if (index != -1) {
 						final List<AbilityBase> abilities = baseStats.getAllAbilities();
-						return index >= abilities.size() ? PPConfig.noneText : abilities.get(index).getLocalizedName();
+
+						for (AbilityBase a : abilities) {
+							if (a.getName().equals(baseStats.getAbilitiesArray()[index])) {
+								if (values.length > 2) {
+									if (values[2].equalsIgnoreCase("unlocalized")) {
+										return a.getName();
+									}
+								} else {
+									return a.getLocalizedName();
+								}
+							}
+						}
+						return PPConfig.noneText;
 					}
 					throwWrongInput("1", "2", "h");
 				} else {
