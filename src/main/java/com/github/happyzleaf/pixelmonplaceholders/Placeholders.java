@@ -50,7 +50,9 @@ public class Placeholders {
 				case "dexcount":
 					return party.pokedex.countCaught();
 				case "dexpercentage":
-					return formatDouble(party.pokedex.countCaught() * 100 / (double) Pokedex.pokedexSize);
+					return formatDouble(party.pokedex.countCaught() * 100 / (double) (Pokedex.pokedexSize - PPConfig.adjustMissingPokedexCount));
+				case "dexsize":
+					return Pokedex.pokedexSize - PPConfig.adjustMissingPokedexCount;
 				case "seencount":
 					return party.pokedex.countSeen();
 				case "wins":

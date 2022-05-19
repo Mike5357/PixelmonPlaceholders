@@ -11,6 +11,7 @@ import java.io.IOException;
 
 public class PPConfig {
 	public static boolean disableEggInfo = true;
+
 	private static String disabledEggMessage = "&cThe eggs are disabled.";
 	public static Text disabledEggText;
 	
@@ -30,6 +31,8 @@ public class PPConfig {
 	public static Text teamMemberNotAvailableText;
 
 	public static double rayTraceDistance = 80d;
+
+	public static int adjustMissingPokedexCount = 0;
 	
 	private static ConfigurationLoader<CommentedConfigurationNode> loader;
 	private static CommentedConfigurationNode node;
@@ -45,7 +48,7 @@ public class PPConfig {
 	public static void loadConfig() {
 		load();
 
-		if (!file.exists() || node.getNode("miscellaneous", "rayTraceDistance").isVirtual()) {
+		if (!file.exists() || node.getNode("miscellaneous", "adjustMissingPokedexCount").isVirtual()) {
 			saveConfig();
 		}
 		
@@ -54,6 +57,7 @@ public class PPConfig {
 		maxFractionDigits = miscellaneous.getNode("maxFractionDigits").getInt();
 		minFractionDigits = miscellaneous.getNode("minFractionDigits").getInt();
 		rayTraceDistance = miscellaneous.getNode("rayTraceDistance").getDouble();
+		adjustMissingPokedexCount = miscellaneous.getNode("adjustMissingPokedexCount").getInt();
 		
 		ConfigurationNode messages = node.getNode("messages");
 		disabledEggMessage = messages.getNode("disabledEgg").getString();
@@ -75,6 +79,7 @@ public class PPConfig {
 		miscellaneous.getNode("maxFractionDigits").setComment("How many digits should be used in decimal values. 2 means 1.12, 3 means 1.123 etc.").setValue(maxFractionDigits);
 		miscellaneous.getNode("minFractionDigits").setComment("The opposite of maxFractionDigits, fills with zeros until there are enough digits. 2 means 1.00, 3 means 1.000 etc.").setValue(minFractionDigits);
 		miscellaneous.getNode("rayTraceDistance").setComment("How far the ray trace will look for pokémon. Default: 80.0").setValue(rayTraceDistance);
+		miscellaneous.getNode("adjustMissingPokedexCount").setComment("Subtract this number from the total dex size count to fix incorrectly calculated dex percentages - MAKE SURE TO PROPERLY ADJUST THIS EVERY UPDATE THAT RESOLVES THIS ISSUE OR ADDS NEW POKEMON").setValue(adjustMissingPokedexCount);
 		
 		CommentedConfigurationNode messages = node.getNode("messages");
 		messages.getNode("disabledEgg").setValue(disabledEggMessage);
